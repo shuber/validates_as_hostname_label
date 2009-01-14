@@ -1,8 +1,6 @@
 # validates\_as\_hostname\_label #
 
-Ensures arguments are valid hostname labels
-
-Checks for:
+Checks for valid hostname labels by looking for:
 
   * Length between 1 and 63 characters long
   * Letters 'a' through 'z' (case-insensitive), the digits '0' through '9', and the hyphen (and optionally the underscore)

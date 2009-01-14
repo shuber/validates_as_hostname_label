@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.version = '1.0.0'
   s.date    = '2009-01-13'
   
-  s.summary     = 'Ensures arguments are valid hostname labels'
-  s.description = 'Ensures arguments are valid hostname labels'
+  s.summary     = 'Checks for valid hostname labels'
+  s.description = 'Checks for valid hostname labels'
   
   s.author   = 'Sean Huber'
   s.email    = 'shuber@huberry.com'
