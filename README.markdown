@@ -2,11 +2,9 @@
 
 Checks for valid hostname labels by looking for:
 
-  * Length between 1 and 63 characters long
-
-  * Letters 'a' through 'z' (case-insensitive), the digits '0' through '9', and the hyphen (and optionally the underscore)
-
-  * Labels that don't begin or end with a hyphen or underscore
+  * Length between 1 and 63 characters long  
+  * Letters 'a' through 'z' (case-insensitive), the digits '0' through '9', and the hyphen (and optionally the underscore)  
+  * Labels that don't begin or end with a hyphen or underscore  
 
 See [http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names](http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names)
 
