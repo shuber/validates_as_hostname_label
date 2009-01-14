@@ -6,7 +6,7 @@ Checks for valid hostname labels by looking for:
   * Letters 'a' through 'z' (case-insensitive), the digits '0' through '9', and the hyphen (and optionally the underscore)  
   * Labels that don't begin or end with a hyphen or underscore  
 
-See [http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names](http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names)
+See [http://en.wikipedia.org/wiki/Hostname#Restrictions\_on\_valid\_host\_names](http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names)
 
 
 ## Installation ##
