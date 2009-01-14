@@ -9,6 +9,8 @@ ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => ':me
 class Account < ActiveRecord::Base
   validates_as_hostname_label :subdomain
   validates_as_hostname_label :subdomain_with_underscores, :allow_underscores => true
+  validates_as_hostname_label :subdomain_with_blank, :allow_blank => true
+  validates_as_hostname_label :subdomain_with_nil, :allow_nil => true
 end
 
 class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
@@ -20,22 +22,24 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
         create_table :accounts do |t|
           t.string   :subdomain
           t.string   :subdomain_with_underscores
+          t.string   :subdomain_with_blank
+          t.string   :subdomain_with_nil
         end
       end
     end
   end
   
   def test_should_save_with_valid_subdomains
-    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test'
+    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test', :subdomain_with_nil => 'test', :subdomain_with_blank => 'test'
     assert @account.save
   end
   
   def test_should_save_subdomains_with_hyphens
-    @account = Account.new :subdomain => 'test-ing', :subdomain_with_underscores => 'test-ing'
+    @account = Account.new :subdomain => 'test-ing', :subdomain_with_underscores => 'test-ing', :subdomain_with_nil => 'test-ing', :subdomain_with_blank => 'test-ing'
     assert @account.save
   end
   
-  def test_should_not_save_with_blank_subdomain
+  def test_should_not_save_with_blank_subdomain_if_allow_option_is_not_specified
     @account = Account.new :subdomain => nil
     assert !@account.save
     assert @account.errors.on(:subdomain)
@@ -43,6 +47,16 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
     @account.subdomain = ''
     assert !@account.save
     assert @account.errors.on(:subdomain)
+  end
+  
+  def test_should_save_with_blank_subdomain
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => 'testing', :subdomain_with_blank => ''
+    assert @account.save
+  end
+  
+  def test_should_save_with_nil_subdomain
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => nil, :subdomain_with_blank => 'testing'
+    assert @account.save
   end
   
   def test_should_not_save_with_too_long_of_a_subdomain
@@ -80,7 +94,7 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   end
   
   def test_should_save_subdomains_with_an_underscore_if_allow_underscores_option_is_true
-    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test_ing'
+    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test_ing', :subdomain_with_nil => 'test', :subdomain_with_blank => 'test'
     assert @account.save
   end
   

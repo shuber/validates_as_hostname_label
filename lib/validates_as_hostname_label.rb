@@ -13,9 +13,9 @@ module Huberry
       format = 'a-z0-9\-'
       format << '_' if options.delete(:allow_underscores)
       
-      validates_length_of *attrs + [:in => 1..63, :message => 'must be between 1 and 63 characters long']
+      validates_length_of *attrs + [{ :in => 1..63, :message => 'must be between 1 and 63 characters long' }.merge(options)]
       validates_format_of *attrs + [{ :with => /^[#{format}]*$/i }.merge(options)]
-      validates_format_of *attrs + [:with => /^[^-_].*[^-_]$/i, :message => "can't start or end with a hyphen or underscore"]
+      validates_format_of *attrs + [{ :with => /^[^-_].*[^-_]$/i, :message => "can't start or end with a hyphen or underscore" }.merge(options)]
     end
   end
 end

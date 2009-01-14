@@ -24,6 +24,8 @@ See [http://en.wikipedia.org/wiki/Hostname#Restrictions\_on\_valid\_host\_names]
 
 Also accepts an `:allow_underscores` option which defaults to `false`
 
+The usual validation options (like `:if`, `:unless`, `:allow_nil`, etc) work as well
+
 
 ## Contact ##
 

@@ -1,3 +1,6 @@
+2009-01-14 - Sean Huber (shuber@huberry.com)
+  * Allow all other validation options like :allow_nil, :if, :unless, etc
+
 2009-01-13 - Sean Huber (shuber@huberry.com)
   * Initial commit
   * Add logic
