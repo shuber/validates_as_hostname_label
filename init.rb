@@ -1,0 +1,1 @@
+require 'validates_as_hostname_label'
