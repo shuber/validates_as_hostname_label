@@ -1,5 +1,6 @@
 2009-01-14 - Sean Huber (shuber@huberry.com)
   * Allow all other validation options like :allow_nil, :if, :unless, etc
+  * Add support for the :reserved option to exclude certain values
 
 2009-01-13 - Sean Huber (shuber@huberry.com)
   * Initial commit

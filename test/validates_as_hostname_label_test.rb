@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
   validates_as_hostname_label :subdomain_with_underscores, :allow_underscores => true
   validates_as_hostname_label :subdomain_with_blank, :allow_blank => true
   validates_as_hostname_label :subdomain_with_nil, :allow_nil => true
+  validates_as_hostname_label :subdomain_with_reserved, :reserved => ['www']
 end
 
 class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
@@ -24,18 +25,19 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
           t.string   :subdomain_with_underscores
           t.string   :subdomain_with_blank
           t.string   :subdomain_with_nil
+          t.string   :subdomain_with_reserved
         end
       end
     end
   end
   
   def test_should_save_with_valid_subdomains
-    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test', :subdomain_with_nil => 'test', :subdomain_with_blank => 'test'
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => 'testing', :subdomain_with_blank => 'testing', :subdomain_with_reserved => 'testing'
     assert @account.save
   end
   
   def test_should_save_subdomains_with_hyphens
-    @account = Account.new :subdomain => 'test-ing', :subdomain_with_underscores => 'test-ing', :subdomain_with_nil => 'test-ing', :subdomain_with_blank => 'test-ing'
+    @account = Account.new :subdomain => 'test-ing', :subdomain_with_underscores => 'test-ing', :subdomain_with_nil => 'test-ing', :subdomain_with_blank => 'test-ing', :subdomain_with_reserved => 'test-ing'
     assert @account.save
   end
   
@@ -50,12 +52,12 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   end
   
   def test_should_save_with_blank_subdomain
-    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => 'testing', :subdomain_with_blank => ''
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => 'testing', :subdomain_with_blank => '', :subdomain_with_reserved => 'testing'
     assert @account.save
   end
   
   def test_should_save_with_nil_subdomain
-    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => nil, :subdomain_with_blank => 'testing'
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'testing', :subdomain_with_nil => nil, :subdomain_with_blank => 'testing', :subdomain_with_reserved => 'testing'
     assert @account.save
   end
   
@@ -72,16 +74,16 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   end
   
   def test_should_not_save_with_subdomains_beginning_with_a_hyphen_or_underscore
-    @account = Account.new :subdomain => '-test'
-    @account.subdomain_with_underscores = '_test'
+    @account = Account.new :subdomain => '-testing'
+    @account.subdomain_with_underscores = '_testing'
     assert !@account.save
     assert @account.errors.on(:subdomain)
     assert @account.errors.on(:subdomain_with_underscores)
   end
   
   def test_should_not_save_with_subdomains_ending_with_a_hyphen_or_underscore
-    @account = Account.new :subdomain => 'test-'
-    @account.subdomain_with_underscores = 'test_'
+    @account = Account.new :subdomain => 'testing-'
+    @account.subdomain_with_underscores = 'testing_'
     assert !@account.save
     assert @account.errors.on(:subdomain)
     assert @account.errors.on(:subdomain_with_underscores)
@@ -94,8 +96,14 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   end
   
   def test_should_save_subdomains_with_an_underscore_if_allow_underscores_option_is_true
-    @account = Account.new :subdomain => 'test', :subdomain_with_underscores => 'test_ing', :subdomain_with_nil => 'test', :subdomain_with_blank => 'test'
+    @account = Account.new :subdomain => 'testing', :subdomain_with_underscores => 'test_ing', :subdomain_with_nil => 'testing', :subdomain_with_blank => 'testing', :subdomain_with_reserved => 'testing'
     assert @account.save
+  end
+  
+  def test_should_not_save_with_a_reserved_subdomain
+    @account = Account.new :subdomain_with_reserved => 'www'
+    assert !@account.save
+    assert @account.errors.on(:subdomain_with_reserved)
   end
   
 end
