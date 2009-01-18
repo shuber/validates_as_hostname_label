@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name    = 'validates_as_hostname_label'
-  s.version = '1.0.2'
-  s.date    = '2009-01-14'
+  s.version = '1.0.3'
+  s.date    = '2009-01-17'
   
   s.summary     = 'Checks for valid hostname labels'
   s.description = 'Checks for valid hostname labels'
