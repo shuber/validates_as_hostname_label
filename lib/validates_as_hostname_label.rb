@@ -14,10 +14,22 @@ module Huberry
       format = 'a-z0-9\-'
       format << '_' if options.delete(:allow_underscores)
       
-      validates_length_of *attrs + [{ :in => 1..63, :message => 'must be between 1 and 63 characters long' }.merge(options)]
-      validates_exclusion_of *attrs + [{ :in => options.delete(:reserved), :message => 'is reserved' }.merge(options)]
+      validates_length_of *attrs + [{
+        :in => 1..63,
+        :message => I18n.t('validates_as_hostname_label.invalid_length', :default => 'must be between 1 and 63 characters long')
+      }.merge(options)]
+
+      validates_exclusion_of *attrs + [{
+        :in => options.delete(:reserved),
+        :message => I18n.t('validates_as_hostname_label.reserved', :default => 'is reserved')
+      }.merge(options)]
+
       validates_format_of *attrs + [{ :with => /^[#{format}]*$/i }.merge(options)]
-      validates_format_of *attrs + [{ :with => /^[^-_].*[^-_]$/i, :message => "can't start or end with a hyphen or underscore" }.merge(options)]
+
+      validates_format_of *attrs + [{
+        :with => /^[^-_].*[^-_]$/i,
+        :message => I18n.t('validates_as_hostname_label.invalid_first_character', :default => "can't start or end with a hyphen or underscore")
+      }.merge(options)]
     end
   end
 end
