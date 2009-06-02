@@ -1,5 +1,8 @@
 module Huberry
   module ValidatesAsHostnameLabel
+    
+    RESERVED_HOSTNAMES = %w(www blog dev stage stats status admin ftp sftp mail pop pop3 imap smtp)
+    
     # Checks for:
     #
     #   * Length between 1 and 63 characters long
@@ -9,7 +12,7 @@ module Huberry
     #
     # Accepts an :allow_underscores option which defaults to false
     def validates_as_hostname_label(*attrs)
-      options = { :allow_underscores => false, :reserved => [] }.merge(attrs.last.is_a?(Hash) ? attrs.pop : {})
+      options = { :allow_underscores => false, :reserved => RESERVED_HOSTNAMES }.merge(attrs.last.is_a?(Hash) ? attrs.pop : {})
       
       format = 'a-z0-9\-'
       format << '_' if options.delete(:allow_underscores)

@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
   validates_as_hostname_label :subdomain_with_underscores, :allow_underscores => true
   validates_as_hostname_label :subdomain_with_blank, :allow_blank => true
   validates_as_hostname_label :subdomain_with_nil, :allow_nil => true
-  validates_as_hostname_label :subdomain_with_reserved, :reserved => ['www']
+  validates_as_hostname_label :subdomain_with_reserved, :reserved => ['funky']
 end
 
 class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
@@ -100,10 +100,24 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
     assert @account.save
   end
   
-  def test_should_not_save_with_a_reserved_subdomain
-    @account = Account.new :subdomain_with_reserved => 'www'
+  def test_should_not_save_with_a_reserved_subdomain_from_the_default_list
+    Huberry::ValidatesAsHostnameLabel::RESERVED_HOSTNAMES.each do |hostname|
+      @account = Account.new :subdomain => hostname
+      assert !@account.save
+      assert @account.errors.on(:subdomain)
+    end
+  end
+
+  def test_should_not_save_with_a_reserved_subdomain_from_a_list
+    @account = Account.new :subdomain_with_reserved => 'funky'
     assert !@account.save
     assert @account.errors.on(:subdomain_with_reserved)
+  end
+  
+  def test_should_not_be_valid_with_a_subdomain_not_from_the_list
+    @account = Account.new :subdomain_with_reserved => 'qqqfds'
+    assert !@account.save
+    assert !@account.errors.on(:subdomain_with_reserved)
   end
   
 end
