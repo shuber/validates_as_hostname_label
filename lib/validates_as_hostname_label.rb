@@ -1,6 +1,6 @@
 module Huberry
   module ValidatesAsHostnameLabel
-    
+  
     RESERVED_HOSTNAMES = %w(www blog dev stage stats status admin ftp sftp mail pop pop3 imap smtp)
     
     # Checks for:

@@ -2,16 +2,16 @@ Gem::Specification.new do |s|
   s.name    = 'validates_as_hostname_label'
   s.version = '1.1.0'
   s.date    = '2009-06-02'
-  
+
   s.summary     = 'Checks for valid hostname labels'
   s.description = 'Checks for valid hostname labels'
-  
+
   s.author   = 'Sean Huber'
   s.email    = 'shuber@huberry.com'
   s.homepage = 'http://github.com/shuber/validates_as_hostname_label'
-  
+
   s.has_rdoc = false
-  
+
   s.files = %w(
     CHANGELOG
     init.rb
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     Rakefile
     README.markdown
   )
-  
+
   s.test_files = %w(
     test/validates_as_hostname_label_test.rb
   )
