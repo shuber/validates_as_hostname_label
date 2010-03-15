@@ -101,7 +101,7 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   end
   
   def test_should_not_save_with_a_reserved_subdomain_from_the_default_list
-    Huberry::ValidatesAsHostnameLabel::RESERVED_HOSTNAMES.each do |hostname|
+    ValidatesAsHostnameLabel::RESERVED_HOSTNAMES.each do |hostname|
       @account = Account.new :subdomain => hostname
       assert !@account.save
       assert @account.errors.on(:subdomain)
