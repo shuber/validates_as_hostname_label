@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   validates_as_hostname_label :subdomain
   validates_as_hostname_label :subdomain_with_underscores, :allow_underscores => true
   validates_as_hostname_label :subdomain_with_blank, :allow_blank => true
-  validates_as_hostname_label :subdomain_with_nil, :allow_nil => true
+  validates_as_hostname_label :subdomain_with_nil, :allow_blank => true
   validates_as_hostname_label :subdomain_with_reserved, :reserved => ['funky']
 end
 
