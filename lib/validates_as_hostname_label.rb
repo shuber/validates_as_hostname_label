@@ -29,6 +29,13 @@ module ValidatesAsHostnameLabel
   #   :allow_underscores  -  Allows underscores in hostname labels. Defaults to false.
   #   :reserved           -  Contains an array of reserved hostname labels to validate exclusion of. 
   #                          Defaults to ValidatesAsHostnameLabel.default_options[:reserved].
+  #
+  # I18n keys:
+  #
+  #   * validates_as_hostname_label.invalid_format
+  #   * validates_as_hostname_label.invalid_length
+  #   * validates_as_hostname_label.invalid_prefix_or_suffix
+  #   * validates_as_hostname_label.reserved
   def validates_as_hostname_label(*attrs)
     options = ValidatesAsHostnameLabel.default_options.merge(attrs.extract_options!)
 
