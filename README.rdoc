@@ -50,6 +50,16 @@ Also accepts an <tt>:allow_underscores</tt> option which defaults to <tt>false</
 The standard validation options <tt>:if</tt>, <tt>:unless</tt>, and <tt>:allow_blank</tt> work as well.
 
 
+== Internationalization
+
+Uses the following I18n keys:
+
+* validates_as_hostname_label.invalid_format
+* validates_as_hostname_label.invalid_length
+* validates_as_hostname_label.invalid_prefix_or_suffix
+* validates_as_hostname_label.reserved
+
+
 == Note on Patches/Pull Requests
 
 * Fork the project.
