@@ -36,7 +36,7 @@ module ValidatesAsHostnameLabel
     format << '_' and characters << 'underscore' if options.delete(:allow_underscores)
 
     I18n.with_options :scope => 'validates_as_hostname_label' do |i18n|
-      validates_presence_of *attrs + [options] unless options.delete(:allow_blank)
+      validates_presence_of *attrs + [options] unless options.delete(:allow_blank) || options.delete(:allow_nil)
       
       validates_exclusion_of *attrs + [{
         :in => options.delete(:reserved),

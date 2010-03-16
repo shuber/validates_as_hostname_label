@@ -1,0 +1,67 @@
+= validates_as_hostname_label
+
+Checks for valid hostname labels by looking for:
+
+* Length between 1 and 63 characters long
+* Alphanumeric, hyphen, and (optionally) underscore characters
+* Labels that don't begin or end with a hyphen or underscore
+* Reserved labels
+
+See http://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names
+
+
+== Installation
+
+  gem install validates_as_hostname_label
+  OR
+  script/plugin install git://github.com/shuber/validates_as_hostname_label.git
+
+
+== Usage
+
+  class Account < ActiveRecord::Base
+    validates_as_hostname_label :subdomain
+  end
+  
+  @account = Account.new
+  @account.save # false
+  @account.errors # { :subdomain => 'is required' }
+
+You may optionally pass a <tt>:reserved</tt> option which should be an array of hostname labels to exclude,
+otherwise <tt>ValidatesAsHostnameLabel.default_options[:reserved]</tt> will be used.
+
+  class Account < ActiveRecord::Base
+    validates_as_hostname_label :subdomain, :reserved => ['www', 'ftp', 'mail', 'pop']
+  end
+  
+  @account = Account.new :subdomain => 'www'
+  @account.save # false
+  @account.errors # { :subdomain => 'is reserved' }
+
+Also accepts an <tt>:allow_underscores</tt> option which defaults to <tt>false</tt>.
+
+  class Account < ActiveRecord::Base
+    validates_as_hostname_label :subdomain, :allow_underscores => true
+  end
+  
+  @account = Account.new :subdomain => 'test_ing'
+  @account.save # true
+
+The standard validation options <tt>:if</tt>, <tt>:unless</tt>, and <tt>:allow_blank</tt> work as well.
+
+
+== Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a
+  future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+  (if you want to have your own version, that is fine but
+   bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+
+== Contact
+
+Problems, comments, and suggestions all welcome: shuber@huberry.com
