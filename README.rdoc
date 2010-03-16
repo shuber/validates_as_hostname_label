@@ -52,7 +52,7 @@ The standard validation options <tt>:if</tt>, <tt>:unless</tt>, and <tt>:allow_b
 
 == Internationalization
 
-Uses the following I18n keys:
+Uses the following <tt>I18n</tt> keys:
 
 * validates_as_hostname_label.invalid_format
 * validates_as_hostname_label.invalid_length
