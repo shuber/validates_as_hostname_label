@@ -13,12 +13,12 @@ Gem::Specification.new do |s|
   s.has_rdoc = false
 
   s.files = %w(
-    CHANGELOG
     init.rb
     lib/validates_as_hostname_label.rb
     MIT-LICENSE
     Rakefile
-    README.markdown
+    README.rdoc
+    test/validates_as_hostname_label_test.rb
   )
 
   s.test_files = %w(
