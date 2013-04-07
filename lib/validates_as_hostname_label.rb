@@ -1,6 +1,5 @@
 # Adds ActiveRecord validation for hostname labels
 module ValidatesAsHostnameLabel
-
   # A hash of default options to use when calling <tt>validates_as_hostname_label</tt>.
   #
   # Defaults:
@@ -15,7 +14,7 @@ module ValidatesAsHostnameLabel
       :reserved => %w(admin blog dev development ftp help imap mail pop pop3 sftp smtp staging stats status support www)
     }
   end
-  
+
   # Validates hostname labels by checking for:
   #
   #   * Length between 1 and 63 characters long
@@ -27,7 +26,7 @@ module ValidatesAsHostnameLabel
   #
   #   :allow_blank        -  Skip validation of the attribute is blank. Defaults to false.
   #   :allow_underscores  -  Allows underscores in hostname labels. Defaults to false.
-  #   :reserved           -  Contains an array of reserved hostname labels to validate exclusion of. 
+  #   :reserved           -  Contains an array of reserved hostname labels to validate exclusion of.
   #                          Defaults to ValidatesAsHostnameLabel.default_options[:reserved].
   #
   # I18n keys:
@@ -44,21 +43,21 @@ module ValidatesAsHostnameLabel
 
     I18n.with_options :scope => 'validates_as_hostname_label' do |i18n|
       validates_presence_of *attrs + [options] unless options.delete(:allow_blank) || options.delete(:allow_nil)
-      
+
       validates_exclusion_of *attrs + [{
         :in => options.delete(:reserved),
         :message => i18n.t('reserved', :default => 'is reserved'),
         :allow_blank => true
       }.merge(options)]
 
-      validates_format_of *attrs + [{ 
-        :with => /^[#{format}]*$/i,
+      validates_format_of *attrs + [{
+        :with => /\A[#{format}]*\z/i,
         :message => i18n.t('invalid_format', :default => "may only contain #{characters.to_sentence} characters"),
         :allow_blank => true
       }.merge(options)]
 
       validates_format_of *attrs + [{
-        :with => /^[^-_].*[^-_]$/i,
+        :with => /\A[^-_].*[^-_]\z/i,
         :message => i18n.t('invalid_prefix_or_suffix', :default => 'may not start or end with a hyphen or underscore'),
         :allow_blank => true
       }.merge(options)]
