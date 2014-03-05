@@ -1,3 +1,6 @@
+require 'active_record'
+require 'active_support/core_ext/object/with_options'
+
 # Adds ActiveRecord validation for hostname labels
 module ValidatesAsHostnameLabel
   # A hash of default options to use when calling <tt>validates_as_hostname_label</tt>.

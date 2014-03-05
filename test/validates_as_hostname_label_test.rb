@@ -1,7 +1,9 @@
 require 'rubygems'
-require 'active_record'
+require 'sqlite3'
 require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/validates_as_hostname_label'
+
+I18n.enforce_available_locales = false
 
 ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => ':memory:'
 
@@ -43,11 +45,11 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   def test_should_not_save_with_blank_subdomain_if_allow_option_is_not_specified
     @account = Account.new :subdomain => nil
     assert !@account.save
-    assert @account.errors.on(:subdomain)
+    assert !@account.errors[:subdomain].empty?
 
     @account.subdomain = ''
     assert !@account.save
-    assert @account.errors.on(:subdomain)
+    assert !@account.errors[:subdomain].empty?
   end
 
   def test_should_save_with_blank_subdomain
@@ -63,35 +65,35 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
   def test_should_not_save_with_too_long_of_a_subdomain
     @account = Account.new :subdomain => ('t' * 64)
     assert !@account.save
-    assert @account.errors.on(:subdomain)
+    assert !@account.errors[:subdomain].empty?
   end
 
   def test_should_not_save_with_invalid_characters
     @account = Account.new :subdomain => '!@#$%^&*'
     assert !@account.save
-    assert @account.errors.on(:subdomain)
+    assert !@account.errors[:subdomain].empty?
   end
 
   def test_should_not_save_with_subdomains_beginning_with_a_hyphen_or_underscore
     @account = Account.new :subdomain => '-testing'
     @account.subdomain_with_underscores = '_testing'
     assert !@account.save
-    assert @account.errors.on(:subdomain)
-    assert @account.errors.on(:subdomain_with_underscores)
+    assert !@account.errors[:subdomain].empty?
+    assert !@account.errors[:subdomain_with_underscores].empty?
   end
 
   def test_should_not_save_with_subdomains_ending_with_a_hyphen_or_underscore
     @account = Account.new :subdomain => 'testing-'
     @account.subdomain_with_underscores = 'testing_'
     assert !@account.save
-    assert @account.errors.on(:subdomain)
-    assert @account.errors.on(:subdomain_with_underscores)
+    assert !@account.errors[:subdomain].empty?
+    assert !@account.errors[:subdomain_with_underscores].empty?
   end
 
   def test_should_not_save_subdomains_with_an_underscore_if_allow_underscores_option_is_false
     @account = Account.new :subdomain => 'test_ing'
     assert !@account.save
-    assert @account.errors.on(:subdomain)
+    assert !@account.errors[:subdomain].empty?
   end
 
   def test_should_save_subdomains_with_an_underscore_if_allow_underscores_option_is_true
@@ -103,20 +105,19 @@ class ValidatesAsHostnameLabelTest < Test::Unit::TestCase
     ValidatesAsHostnameLabel::default_options[:reserved].each do |hostname|
       @account = Account.new :subdomain => hostname
       assert !@account.save
-      assert @account.errors.on(:subdomain)
+      assert !@account.errors[:subdomain].empty?
     end
   end
 
   def test_should_not_save_with_a_reserved_subdomain_from_a_list
     @account = Account.new :subdomain_with_reserved => 'funky'
     assert !@account.save
-    assert @account.errors.on(:subdomain_with_reserved)
+    assert !@account.errors[:subdomain_with_reserved].empty?
   end
 
   def test_should_not_be_valid_with_a_subdomain_not_from_the_list
     @account = Account.new :subdomain_with_reserved => 'qqqfds'
     assert !@account.save
-    assert !@account.errors.on(:subdomain_with_reserved)
+    assert @account.errors[:subdomain_with_reserved].empty?
   end
-
 end
