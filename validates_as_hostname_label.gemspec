@@ -24,4 +24,7 @@ Gem::Specification.new do |s|
   s.test_files = %w(
     test/validates_as_hostname_label_test.rb
   )
+
+  s.add_dependency 'activerecord'
+  s.add_development_dependency 'sqlite3'
 end
