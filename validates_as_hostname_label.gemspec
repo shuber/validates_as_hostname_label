@@ -15,6 +15,8 @@ Gem::Specification.new do |s|
   s.files = %w(
     init.rb
     lib/validates_as_hostname_label.rb
+    Gemfile
+    Gemfile.lock
     MIT-LICENSE
     Rakefile
     README.rdoc
